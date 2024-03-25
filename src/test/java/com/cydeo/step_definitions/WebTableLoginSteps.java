@@ -30,4 +30,18 @@ public class WebTableLoginSteps {
     public void user_is_on_dashboard() {
         dashboardPage.allOrderLink.isDisplayed();
     }
+
+    @When("User enters wrong username")
+    public void user_enters_wrong_username() {
+        loginPage.userNameInput.sendKeys("wrong user name");
+    }
+    @When("User enters wrong password")
+    public void user_enters_wrong_password() {
+        loginPage.passwordInput.sendKeys("wrong password");
+    }
+    @Then("User sees warning  popup")
+    public void user_sees_warning_popup() {
+        loginPage.popUp.isDisplayed();
+    }
+
 }
