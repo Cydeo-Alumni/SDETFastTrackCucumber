@@ -44,4 +44,24 @@ public class WebTableLoginSteps {
         loginPage.popUp.isDisplayed();
     }
 
+    @When("User enters {string}")
+    public void user_enters(String credential) {
+
+        switch (credential){
+            case "username":
+                loginPage.userNameInput.sendKeys(ConfigurationReader.getProperty("username"));
+                break;
+            case "password":
+                loginPage.passwordInput.sendKeys(ConfigurationReader.getProperty("password"));
+                break;
+        }
+    }
+
+    @When("User enters {string} and {string}")
+    public void user_enters_and(String username, String password) {
+        loginPage.userNameInput.sendKeys(username);
+        loginPage.passwordInput.sendKeys(password);
+    }
+
+
 }
