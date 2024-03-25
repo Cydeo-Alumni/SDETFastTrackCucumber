@@ -6,3 +6,5 @@ Feature: Login to web table page
     And User enters password
     And User click login button
     Then User is on dashboard
+
+

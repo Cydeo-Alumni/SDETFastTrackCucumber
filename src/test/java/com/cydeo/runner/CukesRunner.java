@@ -12,7 +12,7 @@ import org.junit.runner.*;
         },
         features = "src/test/resources/features",
         glue = "com/cydeo/step_definitions",
-        dryRun = true,
+        dryRun = false,
         tags = ""
 )
 public class CukesRunner {

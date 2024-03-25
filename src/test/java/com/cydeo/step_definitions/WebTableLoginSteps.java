@@ -8,6 +8,7 @@ import org.openqa.selenium.*;
 public class WebTableLoginSteps {
 
     LoginPage loginPage = new LoginPage();
+    DashboardPage dashboardPage = new DashboardPage();
 
     @Given("User goes to web table page")
     public void user_goes_to_web_table_page() {
@@ -15,21 +16,18 @@ public class WebTableLoginSteps {
     }
     @When("User enters username")
     public void user_enters_username() {
-        loginPage.userNameInput.sendKeys("Test");
+        loginPage.userNameInput.sendKeys(ConfigurationReader.getProperty("username"));
     }
     @When("User enters password")
     public void user_enters_password() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        loginPage.passwordInput.sendKeys(ConfigurationReader.getProperty("password"));
     }
     @When("User click login button")
     public void user_click_login_button() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        loginPage.loginButton.click();
     }
     @Then("User is on dashboard")
     public void user_is_on_dashboard() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        dashboardPage.allOrderLink.isDisplayed();
     }
 }
