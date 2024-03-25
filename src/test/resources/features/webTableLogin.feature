@@ -19,6 +19,7 @@ Feature: Login to web table page
 
   #parameterization
 
+  @db
   Scenario: login with parameters
     When User enters "username"
     And User enters "password"

@@ -7,9 +7,14 @@ import org.openqa.selenium.devtools.v85.network.model.*;
 
 public class Hooks {
 
-    @Before
+    @Before("@api")
     public void setUpDriver(){
         System.out.println("Driver is set up");
+    }
+
+    @Before("@db")
+    public void apiSetUp(){
+        System.out.println("Api is set up");
     }
 
     @After
