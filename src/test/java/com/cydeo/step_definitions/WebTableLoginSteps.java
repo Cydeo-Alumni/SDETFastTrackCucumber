@@ -5,6 +5,8 @@ import com.cydeo.utilities.*;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.*;
 
+import java.util.*;
+
 public class WebTableLoginSteps {
 
     LoginPage loginPage = new LoginPage();
@@ -61,6 +63,14 @@ public class WebTableLoginSteps {
     public void user_enters_and(String username, String password) {
         loginPage.userNameInput.sendKeys(username);
         loginPage.passwordInput.sendKeys(password);
+    }
+
+    @When("User enters below credentials")
+    public void user_enters_below_credentials(Map<String, Object> credentials) {
+        //{"username":"Test","password":"Tester"}
+        loginPage.userNameInput.sendKeys(credentials.get("username").toString());
+        loginPage.passwordInput.sendKeys(credentials.get("password").toString());
+        loginPage.loginButton.click();
     }
 
 

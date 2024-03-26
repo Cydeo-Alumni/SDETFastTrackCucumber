@@ -11,7 +11,7 @@ Feature: Web Table Login With Parameters
     Then User is on dashboard
 
 
-  @wip
+
   Scenario: login with 2 parameters
     When User enters "Test" and "Tester"
     And User click login button
