@@ -9,11 +9,12 @@ import org.junit.runner.*;
 @CucumberOptions(
         plugin = {
                 "html:target/cucumber-reports.html",
-                "me.jvt.cucumber.report.PrettyReports:target/cucumber"
+                "me.jvt.cucumber.report.PrettyReports:target/cucumber",
+                "rerun:target/rerun.txt"
         },
         features = "src/test/resources/features",
         glue = "com/cydeo/step_definitions",
-        dryRun = true,
+        dryRun = false,
         tags = "@wip",
         publish = true
 )

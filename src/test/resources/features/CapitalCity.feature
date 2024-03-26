@@ -1,6 +1,6 @@
 Feature: Google search countries capital city
 
-  @wip
+  #@wip
   Scenario Outline: Google search countries capital city
     Given User goes to Google.com
     When User search for capital of "<country name>"
