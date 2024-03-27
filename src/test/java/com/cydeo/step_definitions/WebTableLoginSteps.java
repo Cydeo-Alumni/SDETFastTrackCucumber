@@ -3,8 +3,10 @@ package com.cydeo.step_definitions;
 import com.cydeo.pages.*;
 import com.cydeo.utilities.*;
 import io.cucumber.java.en.*;
+import org.apache.poi.ss.usermodel.*;
 import org.openqa.selenium.*;
 
+import java.io.*;
 import java.util.*;
 
 public class WebTableLoginSteps {
@@ -71,6 +73,21 @@ public class WebTableLoginSteps {
         loginPage.userNameInput.sendKeys(credentials.get("username").toString());
         loginPage.passwordInput.sendKeys(credentials.get("password").toString());
         loginPage.loginButton.click();
+    }
+
+    @When("User get data from excel file")
+    public void user_get_data_from_excel_file() throws IOException {
+        String path = "C:\\Users\\Zulpikar\\Downloads\\SDETFastTrackCucumber (1)\\SDETFastTrackCucumber\\src\\test\\resources\\test.xlsx";
+
+        FileInputStream file = new FileInputStream(path);
+        Workbook workbook = WorkbookFactory.create(file);
+        Sheet worksheet = workbook.getSheet("test");
+
+        String userName = worksheet.getRow(1).getCell(0).toString(); // Test
+        String password = worksheet.getRow(1).getCell(1).toString(); // Tester
+
+        loginPage.userNameInput.sendKeys(userName);
+        loginPage.passwordInput.sendKeys(password);
     }
 
 
