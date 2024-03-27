@@ -1,10 +1,10 @@
 package com.cydeo.utilities;
 
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.*;
-import org.openqa.selenium.firefox.*;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.concurrent.*;
+import java.util.concurrent.TimeUnit;
 
 public class Driver {
 
@@ -19,49 +19,52 @@ public class Driver {
     We make it static, because we want it to run before anyting else,
     also we will use it in static method
      */
-    private static WebDriver driver;
+    private static InheritableThreadLocal<WebDriver> driverPool = new InheritableThreadLocal<>();
 
     /*
     Create re-usable utility method which will return same driver instance when we call it.
      */
     public static WebDriver getDriver(){
 
-        if(driver == null){  // if driver/browser was never opened
+        if(driverPool.get() == null){  // if driver/browser was never opened
 
-        String browserType = ConfigurationReader.getProperty("browser");
+            String browserType = ConfigurationReader.getProperty("browser");
 
         /*
         Depending on the browserType our switch statement will determine
         to open specific type of browser/driver
          */
-        switch(browserType){
-            case "chrome":
-                driver = new ChromeDriver();
-                driver.manage().window().maximize();
-                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-                break;
-            case "firefox":
-                driver = new FirefoxDriver();
-                driver.manage().window().maximize();
-               driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-                break;
-            case "chrome-headless":
-                //driver = new ChromeDriver(new ChromeOptions().setHeadless(true));
-                break;
-
+            switch(browserType){
+                case "chrome":
+                    driverPool.set(new ChromeDriver());
+                    driverPool.get().manage().window().maximize();
+                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    break;
+                case "firefox":
+                    driverPool.set(new FirefoxDriver());
+                    driverPool.get().manage().window().maximize();
+                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                    break;
+//                case "headless-chrome":
+//                    ChromeOptions option = new ChromeOptions();
+//                    option.setHeadless(true);
+//                    driverPool.set(new ChromeDriver(option));
+//                    driverPool.get().manage().window().maximize();
+//                    driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+//                    break;
+            }
         }
-        }
 
-    // Same driver instance will be returned every time we call Driver.getDriver() method
-       return driver;
+        // Same driver instance will be returned every time we call Driver.getDriver() method
+        return driverPool.get();
 
     }
 
 
     public static void closeDriver(){
-        if(driver!=null) {
-            driver.quit(); // this line will kill the session. value will noy be null
-            driver = null;
+        if(driverPool.get() !=null) {
+            driverPool.get().quit(); // this line will kill the session. value will noy be null
+            driverPool.remove();
         }
     }
 
